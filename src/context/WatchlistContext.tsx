@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
 
-const WatchlistContext = createContext<any>(null);
+export const WatchlistContext = createContext<any>(null);
 
 export const WatchlistProvider = ({ children }: any) => {
   const [watchlist, setWatchlist] = useState<any[]>([]);
@@ -32,4 +32,6 @@ export const WatchlistProvider = ({ children }: any) => {
   );
 };
 
-export const useWatchlist = () => useContext(WatchlistContext);
+export function useWatchlist() {
+  return useContext(WatchlistContext);
+}
