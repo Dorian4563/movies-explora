@@ -52,7 +52,17 @@ export default function MovieDetail() {
               className={`watchlist-btn ${isSaved ? "saved" : ""}`}
               onClick={() => movie && toggleWatchlist(movie)}
             >
-              {isSaved ? "❤️ Remove from List" : "🤍 Add to My List"}
+              {isSaved ? (
+                <>
+                  <span className="btn-icon">❤️</span>
+                  Remove from List
+                </>
+              ) : (
+                <>
+                  <span className="btn-icon">🤍</span>
+                  Add to My List
+                </>
+              )}
             </button>
           </div>
 

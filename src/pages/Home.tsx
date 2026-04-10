@@ -73,12 +73,12 @@ export default function Home() {
       <header className="hero-nav">
         <div className="brand">Movie Explorer</div>
         <nav className="hero-menu">
-          <a href="#home">Home</a>
-          <a href="#trending">TV Shows</a>
-          <a href="#popular">Movies</a>
-          <a href="#my-list">My List</a>
+          <button onClick={() => navigate("/")} className="nav-btn">Home</button>
+          <button onClick={() => navigate("/")} className="nav-btn">TV Shows</button>
+          <button onClick={() => navigate("/")} className="nav-btn">Movies</button>
+          <button onClick={() => navigate("/watchlist")} className="nav-btn">My List</button>
         </nav>
-        <button className="profile-pill">My List</button>
+        <button className="profile-pill" onClick={() => navigate("/watchlist")}>My List</button>
       </header>
 
       <section className="hero-section" id="home">
