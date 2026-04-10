@@ -48,15 +48,95 @@ button {
    ============================================================================ */
 
 .movie-card {
-  background: #fff;
-  padding: 10px;
+  background: rgba(255, 255, 255, 0.05);
   border-radius: 12px;
-  text-align: center;
+  overflow: hidden;
+  transition: transform 0.3s ease, background 0.3s ease;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  flex-direction: column;
+}
+
+.movie-card:hover {
+  transform: scale(1.05);
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.card-image-container {
+  position: relative;
+  aspect-ratio: 2 / 3;
 }
 
 .movie-card img {
   width: 100%;
-  border-radius: 10px;
+  height: 100%;
+  object-fit: cover;
+  cursor: pointer;
+}
+
+.card-toggle-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: rgba(0, 0, 0, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #fff;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  backdrop-filter: blur(8px);
+  transition: all 0.2s ease;
+  font-size: 1rem;
+}
+
+.card-toggle-btn:hover {
+  background: rgba(255, 255, 255, 0.9);
+  color: #000;
+  transform: scale(1.1);
+}
+
+.card-toggle-btn.saved {
+  background: rgba(255, 107, 107, 0.8);
+  border-color: #ff6b6b;
+}
+
+.card-toggle-btn.saved:hover {
+  background: #ff6b6b;
+  color: #fff;
+}
+
+.card-content {
+  padding: 12px;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.card-content h3 {
+  margin: 0 0 8px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.card-content h3:hover {
+  color: #fff;
+}
+
+.card-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.6);
 }
 
 /* ============================================================================
@@ -218,14 +298,17 @@ button {
   align-items: center;
 }
 
-.hero-menu a {
+.nav-btn {
+  background: none;
+  border: none;
   color: rgba(255, 255, 255, 0.8);
-  text-decoration: none;
   font-size: 0.95rem;
+  cursor: pointer;
   transition: color 0.2s ease;
+  padding: 8px 0;
 }
 
-.hero-menu a:hover {
+.nav-btn:hover {
   color: #fff;
 }
 
@@ -441,11 +524,13 @@ button {
   border: 1px solid rgba(255, 255, 255, 0.2);
   color: #f8f8f8;
   padding: 12px 20px;
-  border-radius: 8px;
+  border-radius: 999px;
   cursor: pointer;
   font-size: 0.95rem;
-  margin-bottom: 32px;
-  transition: background 0.2s ease;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .back-btn:hover {
@@ -456,27 +541,38 @@ button {
   background: rgba(255, 255, 255, 0.1);
   border: 2px solid rgba(255, 255, 255, 0.2);
   color: #f8f8f8;
-  padding: 12px 24px;
-  border-radius: 8px;
+  padding: 12px 28px;
+  border-radius: 999px;
   cursor: pointer;
-  font-size: 0.95rem;
+  font-size: 1rem;
+  font-weight: 600;
   margin: 0;
-  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
 .watchlist-btn:hover {
-  background: rgba(255, 255, 255, 0.15);
-  border-color: rgba(255, 255, 255, 0.4);
+  background: rgba(255, 255, 255, 1);
+  border-color: rgba(255, 255, 255, 1);
+  color: #020305;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(255, 255, 255, 0.2);
 }
 
 .watchlist-btn.saved {
-  background: rgba(255, 107, 107, 0.15);
-  border-color: rgba(255, 107, 107, 0.4);
+  background: rgba(255, 107, 107, 0.2);
+  border-color: rgba(255, 107, 107, 0.5);
   color: #ff9b9b;
 }
 
 .watchlist-btn.saved:hover {
-  background: rgba(255, 107, 107, 0.25);
+  background: #ff6b6b;
+  border-color: #ff6b6b;
+  color: #ffffff;
+  box-shadow: 0 8px 20px rgba(255, 107, 107, 0.3);
 }
 
 .detail-header {

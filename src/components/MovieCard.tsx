@@ -9,19 +9,31 @@ export default function MovieCard({ movie }: any) {
 
   return (
     <div className="movie-card">
+      <div className="card-image-container">
+        <img
+          src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
+          alt={movie.title}
+          onClick={() => navigate(`/movie/${movie.id}`)}
+        />
+        <button 
+          className={`card-toggle-btn ${isSaved ? 'saved' : ''}`}
+          onClick={(e) => {
+            e.stopPropagation();
+            toggleWatchlist(movie);
+          }}
+          title={isSaved ? "Remove from List" : "Add to My List"}
+        >
+          {isSaved ? "❤️" : "🤍"}
+        </button>
+      </div>
 
-      <img
-        src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
-        onClick={() => navigate(`/movie/${movie.id}`)}
-      />
-
-      <button onClick={() => toggleWatchlist(movie)}>
-        {isSaved ? "❤️" : "🤍"}
-      </button>
-
-      <h3>{movie.title}</h3>
-      <p>{movie.release_date?.split("-")[0]}</p>
-      <p>⭐ {movie.vote_average}</p>
+      <div className="card-content">
+        <h3 onClick={() => navigate(`/movie/${movie.id}`)}>{movie.title}</h3>
+        <div className="card-meta">
+          <span>{movie.release_date?.split("-")[0]}</span>
+          <span>⭐ {movie.vote_average?.toFixed(1)}</span>
+        </div>
+      </div>
     </div>
   );
 }
