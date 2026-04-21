@@ -1,43 +1,60 @@
-import { useEffect, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { fetchMovies } from "../services/api";
+import { fetchMovies, fetchTVShows } from "../services/api";
 
 export default function Home() {
-  const [movies, setMovies] = useState<any[]>([]);
-  const [query, setQuery] = useState("");
+  const [content, setContent] = useState<any[]>([]);
+  const [contentType, setContentType] = useState<'movies' | 'tv'>('movies');
+  const [searchTerm, setSearchTerm] = useState("");
   const [error, setError] = useState("");
+  const [notificationsOpen, setNotificationsOpen] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
     let active = true;
 
-    const loadMovies = async () => {
+    const loadContent = async () => {
       setError("");
 
       try {
-        const results = await fetchMovies(query);
+        const results = contentType === 'movies' ? await fetchMovies() : await fetchTVShows();
         if (active) {
-          setMovies(results ?? []);
+          setContent(results ?? []);
         }
       } catch (err) {
         if (active) {
-          setMovies([]);
+          setContent([]);
           setError(err instanceof Error ? err.message : String(err));
         }
       }
     };
 
-    loadMovies();
+    loadContent();
 
     return () => {
       active = false;
     };
-  }, [query]);
+  }, [contentType]);
 
-  const heroMovie = movies[0] ?? null;
-  const trending = movies.slice(0, 6);
-  const popular = movies.slice(6, 12);
-  const newReleases = movies.slice(12, 18);
+  const handleSearchSubmit = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const trimmed = searchTerm.trim();
+    if (!trimmed) return;
+    navigate(`/search?q=${encodeURIComponent(trimmed)}`);
+  };
+
+  const handleNotificationClick = () => {
+    setNotificationsOpen((current) => !current);
+  };
+
+  const handleContentTypeChange = (type: 'movies' | 'tv') => {
+    setContentType(type);
+  };
+
+  const heroItem = content[0] ?? null;
+  const trending = content.slice(0, 6);
+  const popular = content.slice(6, 12);
+  const newReleases = content.slice(12, 18);
 
   const renderCarousel = (title: string, items: any[], id?: string) => (
     <section className="section-row" id={id}>
@@ -46,23 +63,23 @@ export default function Home() {
       </div>
       <div className="row-grid">
         {items.length > 0 ? (
-          items.map((movie) => (
+          items.map((item) => (
             <button
-              key={movie.id}
+              key={item.id}
               className="card-button"
-              onClick={() => navigate(`/movie/${movie.id}`)}
+              onClick={() => navigate(`/${contentType === 'movies' ? 'movie' : 'tv'}/${item.id}`)}
             >
               <img
-                src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
-                alt={movie.title}
+                src={`https://image.tmdb.org/t/p/w500${item.poster_path}`}
+                alt={item.title || item.name}
               />
               <div className="card-overlay">
-                <p>{movie.title}</p>
+                <p>{item.title || item.name}</p>
               </div>
             </button>
           ))
         ) : (
-          <div className="card-empty">No movies available.</div>
+          <div className="card-empty">No content available.</div>
         )}
       </div>
     </section>
@@ -71,62 +88,69 @@ export default function Home() {
   return (
     <main className="homepage">
       <header className="hero-nav">
-        <div className="brand">Movie Explorer</div>
+        <div className="hero-brand">Dorian movies explorer</div>
         <nav className="hero-menu">
-          <button onClick={() => navigate("/")} className="nav-btn">Home</button>
-          <button onClick={() => navigate("/")} className="nav-btn">TV Shows</button>
-          <button onClick={() => navigate("/")} className="nav-btn">Movies</button>
+          <button onClick={() => handleContentTypeChange('movies')} className="nav-btn">Home</button>
+          <button onClick={() => handleContentTypeChange('tv')} className="nav-btn">TV Shows</button>
+          <button onClick={() => handleContentTypeChange('movies')} className="nav-btn">Movies</button>
           <button onClick={() => navigate("/watchlist")} className="nav-btn">My List</button>
         </nav>
-        <button className="profile-pill" onClick={() => navigate("/watchlist")}>My List</button>
+
+        <form className="nav-search" onSubmit={handleSearchSubmit}>
+          <input
+            type="search"
+            value={searchTerm}
+            placeholder="Search Inception, Batman..."
+            onChange={(event) => setSearchTerm(event.target.value)}
+          />
+        </form>
+
+        <div className="hero-actions-right">
+          <button className="icon-btn" type="button" onClick={handleNotificationClick}>
+            notifications
+          </button>
+          <button className="profile-pill" onClick={() => navigate("/watchlist")}>My List</button>
+          {notificationsOpen && (
+            <div className="notification-dropdown">
+              <p className="notification-title">Notifications</p>
+              <p>Your watchlist has fresh recommendations.</p>
+            </div>
+          )}
+        </div>
       </header>
 
       <section className="hero-section" id="home">
         <div
           className="hero-banner"
           style={{
-            backgroundImage: heroMovie
-              ? `linear-gradient(180deg, rgba(0,0,0,0.18) 0%, rgba(0,0,0,0.95) 60%), url(https://image.tmdb.org/t/p/original${heroMovie.backdrop_path || heroMovie.poster_path})`
-              : "linear-gradient(180deg, rgba(0,0,0,0.18) 0%, rgba(0,0,0,0.95) 60%, rgba(0,0,0,1) 100%)",
+            backgroundImage: heroItem
+              ? `url(https://image.tmdb.org/t/p/original${heroItem.backdrop_path || heroItem.poster_path})`
+              : "none",
           }}
         >
           <div className="hero-copy">
             <span className="eyebrow">CINEMA NOIR ORIGINAL</span>
-            <h1>{heroMovie?.title || "Discover new movies"}</h1>
+            <h1>{heroItem?.title || heroItem?.name || "Discover new content"}</h1>
             <p>
-              {heroMovie?.overview ||
-                "Browse trending films, watchlist picks, and the latest releases in a cinematic style."}
+              {heroItem?.overview ||
+                `Browse trending ${contentType === 'movies' ? 'films' : 'shows'}, watchlist picks, and the latest releases in a cinematic style.`}
             </p>
             <div className="hero-actions">
               <button
                 className="hero-btn hero-btn-primary"
-                onClick={() => heroMovie && navigate(`/movie/${heroMovie.id}`)}
+                onClick={() => heroItem && navigate(`/${contentType === 'movies' ? 'movie' : 'tv'}/${heroItem.id}`)}
               >
                 Play
               </button>
               <button
                 className="hero-btn hero-btn-secondary"
-                onClick={() => heroMovie && navigate(`/movie/${heroMovie.id}`)}
+                onClick={() => heroItem && navigate(`/${contentType === 'movies' ? 'movie' : 'tv'}/${heroItem.id}`)}
               >
                 More Info
               </button>
             </div>
           </div>
         </div>
-      </section>
-
-      <section className="search-panel">
-        <div className="search-pill">
-          <label htmlFor="search">Search</label>
-          <input
-            id="search"
-            type="text"
-            value={query}
-            placeholder="Search movies..."
-            onChange={(e) => setQuery(e.target.value)}
-          />
-        </div>
-        {error && <p className="error-banner">{error}</p>}
       </section>
 
       {renderCarousel("Trending Now", trending, "trending")}

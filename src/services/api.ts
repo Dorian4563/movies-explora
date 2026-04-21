@@ -34,10 +34,31 @@ export const fetchMovies = async (query = "") => {
   return data.results ?? [];
 };
 
+export const fetchTVShows = async (query = "") => {
+  const apiKey = getApiKey();
+  const url = query
+    ? `${BASE_URL}/search/tv?api_key=${apiKey}&query=${encodeURIComponent(
+        query
+      )}`
+    : `${BASE_URL}/tv/popular?api_key=${apiKey}`;
+
+  const data = await fetchJson(url);
+  return data.results ?? [];
+};
+
 export const fetchMovieDetails = async (id: string) => {
   const apiKey = getApiKey();
   const data = await fetchJson(
     `${BASE_URL}/movie/${encodeURIComponent(id)}?api_key=${apiKey}`
+  );
+
+  return data;
+};
+
+export const fetchTVDetails = async (id: string) => {
+  const apiKey = getApiKey();
+  const data = await fetchJson(
+    `${BASE_URL}/tv/${encodeURIComponent(id)}?api_key=${apiKey}`
   );
 
   return data;

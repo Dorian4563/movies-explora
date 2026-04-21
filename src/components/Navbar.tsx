@@ -7,7 +7,7 @@ export default function Navbar() {
     <nav className="navbar">
       <div className="navbar-container">
         <button className="navbar-logo" onClick={() => navigate("/")}>
-          🎬 Movie Explorer
+           Movie Explorer
         </button>
 
         <ul className="navbar-menu">
@@ -18,7 +18,7 @@ export default function Navbar() {
           </li>
           <li>
             <button onClick={() => navigate("/watchlist")} className="nav-link">
-              ♥ My List
+               My List
             </button>
           </li>
         </ul>
