@@ -5,7 +5,6 @@ import TVDetail from "./pages/TVDetail";
 import Watchlist from "./pages/Watchlist";
 import SearchResults from "./pages/SearchResults";
 import { WatchlistProvider } from "./context/WatchlistContext";
-import Navbar from "./components/Navbar";
 
 export default function App() {
   return (

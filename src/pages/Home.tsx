@@ -1,4 +1,4 @@
-import { FormEvent, useEffect, useState } from "react";
+import { type FormEvent, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { fetchMovies, fetchTVShows } from "../services/api";
 
@@ -119,6 +119,8 @@ export default function Home() {
           )}
         </div>
       </header>
+
+      {error && <div className="error-banner">{error}</div>}
 
       <section className="hero-section" id="home">
         <div
