@@ -75,6 +75,7 @@ export default function Home() {
               />
               <div className="card-overlay">
                 <p>{item.title || item.name}</p>
+                <p>⭐ {item.vote_average?.toFixed(1)}</p>
               </div>
             </button>
           ))
@@ -100,7 +101,7 @@ export default function Home() {
           <input
             type="search"
             value={searchTerm}
-            placeholder="Search Inception, Batman..."
+            placeholder="Search movies, TV shows..."
             onChange={(event) => setSearchTerm(event.target.value)}
           />
         </form>

@@ -7,7 +7,7 @@ export default function Navbar() {
     <nav className="navbar">
       <div className="navbar-container">
         <button className="navbar-logo" onClick={() => navigate("/")}>
-           Movie Explorer
+           more details
         </button>
 
         <ul className="navbar-menu">

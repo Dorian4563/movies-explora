@@ -76,7 +76,7 @@ export default function SearchResults() {
           <input
             type="search"
             value={searchTerm}
-            placeholder="Search Inception, Batman..."
+            placeholder="Search movies, TV shows..."
             onChange={(event) => setSearchTerm(event.target.value)}
           />
         </form>
@@ -110,7 +110,7 @@ export default function SearchResults() {
           <input
             type="search"
             value={searchTerm}
-            placeholder="Search movies..."
+            placeholder="Search movies, TV shows..."
             onChange={(event) => setSearchTerm(event.target.value)}
           />
         </form>
