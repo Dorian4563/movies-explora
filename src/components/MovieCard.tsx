@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { useWatchlist } from "../context/WatchlistContext";
+import useWatchlist from "../context/WatchlistContext";
 
 export default function MovieCard({ movie }: any) {
   const navigate = useNavigate();

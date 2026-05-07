@@ -1,6 +1,6 @@
-import { useWatchlist } from "../context/WatchlistContext";
+import useWatchlist from "../context/WatchlistContext";
 import { useNavigate } from "react-router-dom";
-import { Navbar } from "../components/Navbar";
+import Navbar from "../components/Navbar";
 import MovieCard from "../components/MovieCard";
 
 export default function Watchlist() {

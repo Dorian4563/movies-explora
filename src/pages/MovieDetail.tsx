@@ -2,9 +2,9 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { fetchMovieDetails } from "../services/api";
 import { motion } from "framer-motion";
-import { Navbar } from "../components/Navbar";
+import Navbar from "../components/Navbar";
 import Loader from "../components/Loader";
-import { useWatchlist } from "../context/WatchlistContext";
+import useWatchlist from "../context/WatchlistContext";
 
 export default function MovieDetail() {
   const { id } = useParams();

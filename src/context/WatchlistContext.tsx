@@ -35,3 +35,5 @@ export const WatchlistProvider = ({ children }: any) => {
 export function useWatchlist() {
   return useContext(WatchlistContext);
 }
+
+export default useWatchlist;
