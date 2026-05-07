@@ -6,7 +6,7 @@ import Watchlist from "./pages/Watchlist";
 import SearchResults from "./pages/SearchResults";
 import { WatchlistProvider } from "./context/WatchlistContext";
 
-export default function App() {
+function App() {
   return (
     <WatchlistProvider>
       <BrowserRouter>
@@ -22,3 +22,5 @@ export default function App() {
     </WatchlistProvider>
   );
 }
+
+export default App;
