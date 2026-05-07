@@ -2,7 +2,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { fetchTVDetails } from "../services/api";
 import { motion } from "framer-motion";
-import Navbar from "../components/Navbar";
+import { Navbar } from "../components/Navbar";
 import Loader from "../components/Loader";
 import { useWatchlist } from "../context/WatchlistContext";
 

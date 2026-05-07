@@ -6,7 +6,7 @@ import Watchlist from "./pages/Watchlist";
 import SearchResults from "./pages/SearchResults";
 import { WatchlistProvider } from "./context/WatchlistContext";
 
-function App() {
+export function App() {
   return (
     <WatchlistProvider>
       <BrowserRouter>
@@ -16,7 +16,6 @@ function App() {
           <Route path="/movie/:id" element={<MovieDetail />} />
           <Route path="/tv/:id" element={<TVDetail />} />
           <Route path="/watchlist" element={<Watchlist />} />
-          
         </Routes>
       </BrowserRouter>
     </WatchlistProvider>
