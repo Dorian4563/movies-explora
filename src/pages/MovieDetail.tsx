@@ -52,7 +52,7 @@ export default function MovieDetail() {
 
           <div className="detail-hero-body detail-content">
             <button className="back-btn hero-back" onClick={() => navigate(-1)}>
-              ← Back
+              Back
             </button>
 
             <div className="detail-poster-wrapper">

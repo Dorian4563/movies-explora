@@ -108,7 +108,8 @@ export default function Home() {
 
         <div className="hero-actions-right">
           <button className="icon-btn" type="button" onClick={handleNotificationClick}>
-            notifications
+              🔔
+
           </button>
           <button className="profile-pill" onClick={() => navigate("/watchlist")}>My List</button>
           {notificationsOpen && (
