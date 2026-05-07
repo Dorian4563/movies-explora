@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { useWatchlist } from "../context/WatchlistContext";
+import useWatchlist from "../context/WatchlistContext";
 
 export default function MovieCard({ movie }: any) {
   const navigate = useNavigate();
@@ -32,6 +32,8 @@ export default function MovieCard({ movie }: any) {
         <div className="card-meta">
           <span>{movie.release_date?.split("-")[0]}</span>
           <span>⭐ {movie.vote_average?.toFixed(1)}</span>
+          <span>{movie.runtime ? `${movie.runtime}m` : "N/A"}</span>
+          <span>{movie.original_language?.toUpperCase()}</span>
         </div>
       </div>
     </div>
